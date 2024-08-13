@@ -1,0 +1,90 @@
+<div class="container">
+  <form #createTodo="ngForm" (ngSubmit)="createTodoItem(createTodo.value)">
+    <h4 class="text-primary text-center">Create Todo Item</h4>
+    <div class="form-group">
+      <label for="id" class="col-sm-1-12 col-form-label">Item Id</label>
+      <div class="col-sm-1-12">
+        <input type="text" class="form-control" name="id" id="id" placeholder="Enter Item Id" ngModel>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="title" class="col-sm-1-12 col-form-label">Item title</label>
+      <div class="col-sm-1-12">
+        <input type="text" class="form-control" name="title" id="title" placeholder="Enter Item Title" ngModel>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="status" class="col-sm-1-12 col-form-label">Item status</label>
+      <div class="col-sm-1-12">
+        <input type="text" class="form-control" name="status" id="status" placeholder="Enter Item status" ngModel>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Todo</button>
+  </form>
+</div>
+
+<table *ngIf="todos" class="container mt-4 table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Status</th>
+      <th>Update Todo Item</th>
+      <th>Delete Todo Item</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let todo of todos">
+      <td scope="row">{{todo.id}}</td>
+      <td>{{todo.title}}</td>
+      <td>{{todo.status}}</td>
+      <td><button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateItem" (click)="updateCurrentTodo(todo)">Update Todo</button></td>
+      <td><button type="button" class="btn btn-danger" (click)="deleteTodoItem(todo.key)">Delete Todo</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="updateItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #updateTodo="ngForm" (ngSubmit)="updateTodoItem(updateTodo.value)">
+          <h4 class="text-primary text-center">Update Todo Item</h4>
+          <div class="form-group">
+            <label for="key" class="col-sm-1-12 col-form-label">Item Key</label>
+            <div class="col-sm-1-12">
+              <input type="text" class="form-control" name="key" id="key" placeholder="Enter Item Key" [ngModel]="currentTodo?.key">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="id" class="col-sm-1-12 col-form-label">Item Id</label>
+            <div class="col-sm-1-12">
+              <input type="text" class="form-control" name="id" id="id" placeholder="Enter Item Id" [ngModel]="currentTodo?.id">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="title" class="col-sm-1-12 col-form-label">Item title</label>
+            <div class="col-sm-1-12">
+              <input type="text" class="form-control" name="title" id="title" placeholder="Enter Item Title" [ngModel]="currentTodo?.title">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="status" class="col-sm-1-12 col-form-label">Item status</label>
+            <div class="col-sm-1-12">
+              <input type="text" class="form-control" name="status" id="status" placeholder="Enter Item status" [ngModel]="currentTodo?.status">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Update Todo</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
